@@ -1,0 +1,198 @@
+url_path = 'https://jsonplaceholder.typicode.com/'
+
+const funcpost = (posts, users) =>{
+  const sas = document.getElementById('rew')
+
+  posts.map(post => {
+    users.map(user => {
+      if(post.userId == user.id)
+        post.username = user.name
+    })
+  })
+  
+  const out = posts.map(el => {
+    m = el.username
+    return `<div class='table-items'><h1 class='ew'>${el.id}</h1><h1 class='ew'>${el.title}</h1><h1 class='ew'>${el.body}</h1><h1 onclick='userPage()'>${m}</h1></></div>`
+  })
+  
+  sas.innerHTML = out
+}
+
+const posts = fetch(url_path + 'posts', {
+  method: 'POST',
+  body: JSON.stringify(data),
+  headers: {
+      "Content-type": "application/json; charset=UTF-8"}
+}).then(res => res.json())
+  .then(json => console.log(json))
+
+
+
+
+  .then(res => res.json())
+  .then(json => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(result => result.json())
+      .then(json1 => funcpost(json, json1))
+
+    return json
+    .then(json =>  userPage(json, json))
+  })
+  .catch(err=>{
+    console.log('rejected', err)
+  })
+
+// let user = fetch('https://jsonplaceholder.typicode.com/users')
+//   .then(res => res.json())
+//   .then(json => thUser(json))
+//   .catch(err => console.log('rejected', err))
+
+// const thUser = data => {
+//   const dad = document.getElementById('root')
+
+//   data.map(element => {
+//     console.log(element)
+//   })    
+// }
+
+const userPage = (posts, users) =>{
+  window.location.href='./user.html'
+    const ede = document.getElementById('ede')
+    posts.map(post=>{
+      users.map(user=>{
+        if(post.userid == user.id){
+          console.log(user.id)
+        }
+      })
+    })
+
+    const out = users.map(el=>{
+        console.log(el.id)
+    })
+
+    ede.innerHTML = out
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const funcpost = (posts, users) =>{
+  const sas = document.getElementById('rew')
+
+  posts.map(post => {
+    users.map(user => {
+      if(post.userId == user.id)
+        post.username = user.name
+    })
+  })
+  
+  const out = posts.map(el => {
+    m = el.username
+    return `<div class='table-items'>
+              <h1 class='ew'>${el.id}</h1>
+              <h1 class='ew'>${el.title}</h1>
+              <h1 class='ew'>${el.body}</h1>
+              <h1 id="${el.userId}" onclick='userPage()'>${m}</h1>
+            </div>`
+  })
+  
+  sas.innerHTML = out
+}
+
+const posts = fetch('https://jsonplaceholder.typicode.com/posts')
+  .then(res => res.json())
+  .then(json => { 
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(result => result.json())
+    .then(json1 => {
+      funcpost(json, json1)
+      return json
+    })
+    .then(json =>  userPage(json, json))
+  })
+  .catch(err=>{
+    console.log('rejected', err)
+  })
+
+// let user = fetch('https://jsonplaceholder.typicode.com/users')
+//   .then(res => res.json())
+//   .then(json => thUser(json))
+//   .catch(err => console.log('rejected', err))
+
+// const thUser = data => {
+//   const dad = document.getElementById('root')
+
+//   data.map(element => {
+//     console.log(element)
+//   })    
+// }
+
+const userPage = (posts, users) =>{
+
+  window.location.href='./user.html'
+    const ede = document.getElementById('ede')
+    posts.map(post=>{
+      users.map(user=>{
+        if(post.userid == user.id){
+          console.log(user.id)
+        }
+      })
+    })
+
+    const out = users.map(el=>{
+        console.log(el.id)
+    })
+
+    ede.innerHTML = out
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+const fetching1 = () => {
+  fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(res => res.json())
+        .then(json => fetching2(json))
+}
+
+
+const fetching2 = async json1 => {
+  fetch('https://jsonplaceholder.typicode.com/users')
+    .then(result => result.json())
+    .then(json => { 
+            json1.map( i => { 
+                json.map(j => {
+                    if (i.userId == j.id) i['name'] = j.name
+                  })
+              })
+          })
+
+  return getPosts(json1)
+}
+                
+  const getPosts = json =>{
+    const element = document.getElementById('post-data'); 
+
+    const out = json.map(i =>{
+      return `<div class='post-items'>
+                <div class='post-block'>${i.id}</div>
+                <div class='post-block'>${i.title}</div>
+                <div class='post-block'>${i.body}</div>
+                <div class='post-block-userId' onclick='userStatus(${i.userId})'>${i.name}</div>
+            </div>`
+    })
+    
+    element.innerHTML = out.join('');
+  }
+
+const userStatus = () =>{
+    const mainRoot = document.getElementById('main-root')
+    const root1 = document.getElementById('user')
+    mainRoot.style.display= 'none'
+    root1.style.display='block' 
+  }
+
+
+ fetching1()
